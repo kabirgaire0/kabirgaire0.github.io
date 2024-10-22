@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kabir Gaire Portfolio</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="en.js"></script>
+  <script src="ja.js"></script>
+  <script>
+    let currentLang = 'en';
+    
+    function setContent(langData) {
+      Object.keys(langData).forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+          if (typeof langData[id] === 'string') {
+            element.textContent = langData[id];
+          } else if (Array.isArray(langData[id])) {
+            element.innerHTML = langData[id].map(item => `<li>${item}</li>`).join('');
+          } else if (typeof langData[id] === 'object') {
+            // Handle table data
+            const tbody = element.querySelector('tbody');
+            if (tbody) {
+              tbody.innerHTML = Object.entries(langData[id]).map(([key, value]) => `
+                <tr class="odd:bg-gray-100 even:bg-gray-200 dark:odd:bg-gray-700 dark:even:bg-gray-800 dark:text-gray-200">
+                  <td class="px-4 py-2 border-t border-gray-300 dark:border-gray-600">${key}</td>
+                  <td class="px-4 py-2 border-t border-gray-300 dark:border-gray-600">${value}</td>
+                </tr>
+              `).join('');
+            }
+          }
+        }
+      });
+    }
+
+    function toggleLanguage() {
+      currentLang = currentLang === 'en' ? 'ja' : 'en';
+      setContent(currentLang === 'en' ? enContent : jaContent);
+    }
+
+    function toggleDarkMode() {
+      const htmlElement = document.documentElement;
+      if (htmlElement.classList.contains('dark')) {
+        htmlElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        htmlElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    window.onload = () => {
+      // Set the initial content based on user settings
+      setContent(enContent);
+
+      // Set theme based on user's preference or system settings
+      const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark' || (!savedTheme && userPrefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    }
+  </script>
+  <style>
+    .dark body {
+      background-color: #1a202c;
+      color: #e2e8f0;
+    }
+    .dark a {
+      color: #63b3ed;
+    }
+    .dark #skills-table {
+      background-color: #2d3748;
+    }
+    .dark th {
+      background-color: #4a5568;
+      color: #e2e8f0;
+    }
+    .dark td {
+      color: #e2e8f0;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100">
+  <div class="max-w-2xl mx-auto px-6 py-12">
+    <div class="text-right mb-4">
+      <button onclick="toggleLanguage()" class="bg-blue-500 text-white px-4 py-2 rounded">日本語 / English</button>
+      <button onclick="toggleDarkMode()" class="bg-gray-800 text-white px-4 py-2 rounded ml-2">🌙 / ☀️</button>
+    </div>
+    <header class="text-center mb-8">
+      <h1 id="name" class="text-4xl font-bold mb-2"></h1>
+      <p id="intro" class="text-lg"></p>
+    </header>
+
+    <section class="mb-8">
+      <h3 id="backend-title" class="text-xl font-semibold mb-2"></h3>
+      <p id="backend-desc"></p>
+    </section>
+
+    <div class="flex justify-center space-x-4 mb-8">
+      <a href="https://www.linkedin.com/in/kabirgaire/" id="linkedin" class="text-blue-600 hover:underline"></a>
+      <a href="https://github.com/kabirgaire0" id="github" class="text-blue-600 hover:underline"></a>
+      <a href="#" id="portfolio" class="text-blue-600 hover:underline"></a>
+      <a href="#" id="wantedly" class="text-blue-600 hover:underline"></a>
+    </div>
+
+    <section class="mb-8">
+      <h3 id="fullstack-title" class="text-xl font-semibold mb-2"></h3>
+      <p id="fullstack-desc"></p>
+    </section>
+
+    <section class="mb-8">
+      <h3 id="cloud-title" class="text-xl font-semibold mb-2"></h3>
+      <p id="cloud-desc"></p>
+    </section>
+
+    <section class="mb-8">
+      <h3 id="skills-title" class="text-xl font-semibold mb-4"></h3>
+      <div class="overflow-x-auto">
+        <table id="skills-table" class="min-w-full bg-white shadow-md rounded-lg">
+          <thead>
+            <tr class="bg-gray-200 dark:bg-gray-700">
+              <th class="text-left px-4 py-2 font-medium" id="category-header"></th>
+              <th class="text-left px-4 py-2 font-medium" id="skills-header"></th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="mb-8">
+      <h3 id="ambition-title" class="text-xl font-semibold mb-2"></h3>
+      <ul id="ambition-list" class="list-disc list-inside">
+      </ul>
+    </section>
+
+    <section class="mb-8">
+      <h3 id="awards-title" class="text-xl font-semibold mb-2"></h3>
+      <ul id="awards-list" class="list-disc list-inside">
+      </ul>
+    </section>
+
+    <section class="mb-8">
+      <h3 id="hobbies-title" class="text-xl font-semibold mb-2"></h3>
+      <ul id="hobbies-list" class="list-disc list-inside">
+      </ul>
+    </section>
+
+    <section id="contact" class="text-center">
+      <h3 id="contact-title" class="text-xl font-semibold mb-2"></h3>
+      <p>📧 <a href="mailto:kabir.gaire123@gmail.com" class="text-blue-600 hover:underline">kabir.gaire123@gmail.com</a></p>
+    </section>
+  </div>
+</body>
+</html>
