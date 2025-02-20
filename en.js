@@ -28,7 +28,7 @@ const enContent = {
     ],
     'awards-title': 'Awards and Certifications',
     'awards-list': [
-        'TOEIC Listening & Reading Test: 895 (Sep 2024)',
+        'TOEIC Listening & Reading Test: 965 (Sep 2024)',
         'Japanese Language Proficiency Test (JLPT): N1 (Dec 2021)',
         'EIKEN Test in Practical English Proficiency: Pre-1st Grade (Oct 2019)'
     ],
